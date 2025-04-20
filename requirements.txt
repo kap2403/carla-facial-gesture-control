@@ -1,0 +1,6 @@
+mediapipe
+pandas
+scikit-learn
+carla
+pygame
+tqdm

@@ -1,0 +1,19 @@
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Virtual environment directories
+.venv/
+env/
+
+# IDE or editor folders
+.idea/
+
+# Igonore the folders
+dataset/
+models/
+notebooks/
+runs/
