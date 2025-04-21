@@ -225,12 +225,12 @@ def main():
     
     parser.add_argument('--model_path', 
                         default= (
-                    r"models\updated_weights\model_20250420_153811_13"
+                    r"models\updated_weights\model_20250420_223939_37"
                         ),
                         help='Path to the DNN model weights')
     parser.add_argument('--labels', 
                         default= [
-                    'left_tilt', 'right_tilt', 'front_facing', 'frown', 'mouth_open'
+                    'left_tilt', 'right_tilt', 'frown', 'mouth_open'
                     ], 
                         help='List of gesture labels')
 

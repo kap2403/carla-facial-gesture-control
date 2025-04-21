@@ -43,6 +43,9 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 # Gear Control Class (with Min and Max Tracking)
 class GearControl:
+    """
+    Class to manage gear control based on chin position.
+    """
     def __init__(self, sample_limit=500):
         self.sample_limit = sample_limit
         self.chin_samples = []
@@ -75,24 +78,23 @@ class GearControl:
         elif chin_y > forward_threshold:
             return "Forward"
 
-# ...existing code...
 
-def game_loop(args, model_path: str, labels: List[str]):
+def game_loop(args, model_path: str, num_classes, labels: List[str]):
     pygame.init()
     pygame.font.init()
 
     world = None
     original_settings = None
     gear_controller = GearControl(sample_limit=100)
-    model = load_dnn_model(PATH=model_path).to(device)
+    model = load_dnn_model(PATH=model_path, num_classes= num_classes).to(device)
 
     # VideoWriter setup for recording
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')  
     cv2_out = cv2.VideoWriter(
-        'dataset\ouput_results\cv2_output.mp4', fourcc, 20.0, (640, 480)
+        'dataset\ouput_results\cv2_output_v4.mp4', fourcc, 20.0, (640, 480)
         )  # Adjust resolution as needed
     pygame_out = cv2.VideoWriter(
-        'dataset\ouput_results\pygame_output.mp4', fourcc, 20.0, (args.width, args.height)
+        'dataset\ouput_results\pygame_output_v4.mp4', fourcc, 20.0, (args.width, args.height)
         )
 
     try:
@@ -192,7 +194,7 @@ def game_loop(args, model_path: str, labels: List[str]):
                 print(f"Error processing image: {e}")
                 continue
 
-            cv2.imshow('MediaPipe Face Mesh', image_)
+            cv2.imshow('MediaPipe Face Mesh', cv2.flip(image_, 1))
             if cv2.waitKey(5) & 0xFF == 27:
                 break
 
@@ -253,15 +255,16 @@ def main():
     
     parser.add_argument('--model_path', 
                         default= (
-                    "D:\karthik\challenge\models\dnn_weights\model_20250420_102043_33"
+                    r"models\updated_weights\model_20250421_004820_30"
                         ),
                         help='Path to the DNN model weights')
     parser.add_argument('--labels', 
                         default= [
-                    'left_facing', 'right_facing', 'front_facing', 'frown', 'mouth_open'
+                    'left_tilt', 'right_tilt', 'frown', 'mouth_open', "front_facing"
                     ], 
                         help='List of gesture labels')
-
+    parser.add_argument('--num_classes', 
+                        default= 5, type=int, help='Number of gesture classes')
     args = parser.parse_args()
     args.width, args.height = [int(x) for x in args.res.split('x')]
 
@@ -270,7 +273,7 @@ def main():
     logging.info('Connecting to CARLA server at %s:%s', args.host, args.port)
 
     try:
-        game_loop(args, model_path=args.model_path, labels=args.labels)
+        game_loop(args, model_path=args.model_path, num_classes= args.num_classes, labels=args.labels)
     except KeyboardInterrupt:
         print('\nCancelled by user. Bye!')
 

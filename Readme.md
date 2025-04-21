@@ -1,8 +1,4 @@
-Sure! Here's a polished and clear version of your README, tailored to present well during an interview. It improves clarity, grammar, formatting, and consistency while keeping your original content and technical details intact:
-
----
-
-# 🚗 CARLA Gesture Control Client
+## 🚗 CARLA Gesture Control Client
 
 Control a vehicle in the [CARLA Simulator](https://carla.org/) using **facial gestures** detected via webcam. This project integrates **MediaPipe** for facial landmark detection and a **ResNet50-based deep neural network** for gesture classification, enabling intuitive, hands-free vehicle control.
 
@@ -103,24 +99,35 @@ python train.py
 
 ---
 
-## 🚀 Real-Time Inference & Control
+## 🚀 Real-Time Inference & Vehicle Control
 
-Run the application to control the CARLA vehicle in real-time using facial gestures.
+Control the CARLA vehicle in real-time using facial gestures detected via webcam.
 
-### Run the main control script:
+### Steps to Run the Main Control Script:
 
-```bash
-python main.py
-```
+1. **Download Model Weights**  
+   a. Download the pre-trained model weights from the following link:  
+   [Download Model Weights](https://drive.google.com/file/d/18tKrcqKahWkzcWHDAL_oq3xoNvaZmEt2/view?usp=drive_link)
 
-Make sure to load the correct model weights before starting.
+   b. update the model path in the main.py
+
+2. **Run the Script**  
+   Execute the main control script to start the application:
+   ```bash
+   python main.py
+   ```
+
+3. **Load the Model Weights**  
+   Ensure the correct model weights are loaded before starting the application.
 
 ---
 
-## 📌 Notes
+## 🎥 Results Video
 
-- Ensure your webcam is functional and accessible before running scripts.
-- For best results, record data in a well-lit environment with minimal background distractions.
-- The gesture classifier is based on **ResNet50** and fine-tuned for facial landmark-based inputs.
+Watch the demonstration of the CARLA Gesture Control system in action:  
+[carla simualtion video](https://drive.google.com/file/d/1AUFyfK4gxlDs891u75sz6nJrJITF55UH/view?usp=sharing)
+[Face Detection video](https://drive.google.com/file/d/1n5GA4XDSfgXwvZ3qhoSvjg8Y9JFCWWUE/view?usp=sharing)
 
 ---
+
+Enjoy hands-free vehicle control with intuitive facial gestures!

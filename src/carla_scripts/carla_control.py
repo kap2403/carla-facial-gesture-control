@@ -260,7 +260,9 @@ class World(object):
         blueprint_list = get_actor_blueprints(self.world, self._actor_filter, self._actor_generation)
         if not blueprint_list:
             raise ValueError("Couldn't find any blueprints with the specified filters")
-        blueprint = random.choice(blueprint_list)
+        # blueprint = random.choice(blueprint_list)
+
+        blueprint = self.world.get_blueprint_library().find('vehicle.dodge.charger')
         blueprint.set_attribute('role_name', self.actor_role_name)
         if blueprint.has_attribute('terramechanics'):
             blueprint.set_attribute('terramechanics', 'true')
@@ -1279,7 +1281,6 @@ class GestureControl(object):
         self._steer_cache = 0.0
         world.hud.notification("Press 'H' or '?' for help.", seconds=4.0)
 
-
     def _parse_vehicle_keys(self, world, face_gesture, gear_status):
         # Reset control every frame to avoid accumulation errors
         control = carla.VehicleControl()
@@ -1297,7 +1298,7 @@ class GestureControl(object):
 
         elif face_gesture == "mouth_open":
             control.brake = 0.0
-            control.throttle = 0.6
+            control.throttle = 0.5
             self.left_tilt_counter = 0
             self.right_tilt_counter = 0
 
@@ -1305,15 +1306,15 @@ class GestureControl(object):
             self.left_tilt_counter += 1
             self.right_tilt_counter = 0  # Reset the other counter
             control.brake = 0.0
-            control.throttle = min(0.1 + 0.1 * self.left_tilt_counter, 1.0)
-            control.steer = max(-0.1 * self.left_tilt_counter, -1.0)
+            control.throttle = 0.3
+            control.steer = max(-0.1 * self.left_tilt_counter, -1)
 
         elif face_gesture == "right_tilt":
             self.right_tilt_counter += 1
             self.left_tilt_counter = 0  # Reset the other counter
             control.brake = 0.0
-            control.throttle = min(0.1 + 0.1 * self.right_tilt_counter, 1.0)
-            control.steer = min(0.1 * self.right_tilt_counter, 1.0)
+            control.throttle = 0.3
+            control.steer = min(0.1 * self.right_tilt_counter, 1)
 
         else:
             self.left_tilt_counter = 0
@@ -1326,5 +1327,3 @@ class GestureControl(object):
         # Apply the updated control
         self._control = control
         world.player.apply_control(self._control)
-
-

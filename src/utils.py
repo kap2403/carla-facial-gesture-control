@@ -6,13 +6,35 @@ import cv2
 from model.model import GestureClassifier
 from torchvision import transforms
 
-def load_model(model_path):
+def load_model(model_path: str):
+    """
+    Load a pre-trained model from a file.
+
+    Args:
+        model_path (str): Path to the model file.
+
+    Returns:
+        _type_: loaded model.
+    """
+
     with open(model_path, 'rb') as f:
         model = pickle.load(f)
     return model
 
-def load_dnn_model(PATH):
-    saved_model = GestureClassifier()
+def load_dnn_model(PATH: str, num_classes: int) -> GestureClassifier:
+    """
+    Load a pre-trained DNN model from a file.
+    This function loads a model architecture and its weights from the specified path.
+
+    Args:
+        PATH (str): Path to the model file.
+        num_classes (int): Number of classes for the model.
+
+    Returns:
+        GestureClassifier: loaded model.
+    """
+
+    saved_model = GestureClassifier(num_classes=num_classes)
     saved_model.load_state_dict(torch.load(PATH))
     return saved_model
 

@@ -13,13 +13,12 @@ import cv2
 import numpy as np
 
 class GestureDataset(Dataset):
-    def __init__(self, dataset_folder_path, transform=None):
+    def __init__(self, num_classes, labels,  dataset_folder_path, transform=None):
         self.labels = []
         self.images = []
         self.face_landmarks = []
         self.transform = transform  # Store transform
-
-        labels = ['left_tilt', 'right_tilt', 'front_facing', 'frown', 'mouth_open']
+        self.num_classes = num_classes  # Number of classes
         # Create a dictionary mapping
         label_to_int = {label: idx for idx, label in enumerate(labels)}
 
@@ -63,7 +62,7 @@ class GestureDataset(Dataset):
         if self.transform is not None:
             image = self.transform(image)
         # One-hot encoding for 5 classes
-        target_one_hot = np.eye(5)[target]
+        target_one_hot = np.eye(self.num_classes)[target]
         label = torch.tensor(target_one_hot, dtype=torch.float32)
         landmarks_tensor = torch.tensor(landmarks, dtype=torch.float32)
 

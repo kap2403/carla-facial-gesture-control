@@ -16,24 +16,22 @@ from torch.utils.tensorboard import SummaryWriter
 from datetime import datetime
 
 
-BATCH_SIZE = 16
-NUM_EPOCHS = 1000
-LEARNING_RATE = 1e-4
-VAL_SPLIT = 0.2
-IMAGE_SIZE = (224, 224)
-LANDMARK_DIM = 1434
-NUM_CLASSES = 5
+num_classes = 5
+labels = ['left_tilt', 'right_tilt', 'frown', 'mouth_open', "front_facing"]
+
 DATA_PATH = r'dataset\images_landmarks_dataset'
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # --- Transforms ---
-train_transforms = transforms.Compose([
   transforms.ToTensor(),
   transforms.Resize((224, 224)),
   transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
 ])
 
+
 dataset = GestureDataset(
+    num_classes = num_classes,
+    labels = labels,
     dataset_folder_path = "dataset\images_landmarks_dataset", 
     transform=train_transforms)
 # Total dataset size
@@ -49,7 +47,7 @@ train_set, test_set = random_split(dataset, [train_size, test_size])
 train_dataloader = DataLoader(train_set, batch_size=50,shuffle=True)
 test_dataloader = DataLoader(test_set, batch_size=1,shuffle=True)
 
-model = GestureClassifier().to(device)
+model = GestureClassifier(landmark_dim=478, num_classes=num_classes).to(device)
 
 # Optimizers specified in the torch.optim package
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
@@ -99,7 +97,7 @@ def main(model_save_path:str):
     best_vloss = float('inf')
     
     # --- Early stopping parameters ---
-    patience = 10
+    patience = 5
     early_stop_counter = 0
 
     for epoch in range(EPOCHS):
