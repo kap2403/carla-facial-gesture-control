@@ -1,10 +1,8 @@
-import torch
-from torch.utils.data import Dataset
-import os
-import csv
-import cv2
-import numpy as np
-
+"""
+This module contains the GestureDataset class for loading gesture data.
+It reads images and their corresponding labels and landmarks from a specified folder 
+structure.
+"""
 import torch
 from torch.utils.data import Dataset
 import os

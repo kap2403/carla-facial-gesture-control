@@ -23,10 +23,11 @@ DATA_PATH = r'dataset\images_landmarks_dataset'
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # --- Transforms ---
-  transforms.ToTensor(),
-  transforms.Resize((224, 224)),
-  transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
-])
+train_transforms = transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Resize((224, 224)),
+                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+                ])
 
 
 dataset = GestureDataset(
@@ -130,7 +131,8 @@ def main(model_save_path:str):
         if avg_vloss < best_vloss:
             best_vloss = avg_vloss
             early_stop_counter = 0
-            model_path = os.path.join(model_save_path, 'model_{}_{}'.format(timestamp, epoch_number))
+            model_path = os.path.join(model_save_path, 
+                                      'model_{}_{}'.format(timestamp, epoch_number))
             torch.save(model.state_dict(), model_path)
         else:
             early_stop_counter += 1
