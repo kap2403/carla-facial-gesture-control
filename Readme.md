@@ -124,11 +124,11 @@ Control the CARLA vehicle in real-time using facial gestures detected via webcam
 
 ## 🎥 Results Videos
 
-Experience the CARLA Gesture Control system in action through the following demonstrations:
+Explore the CARLA Gesture Control system in action with the following demonstrations:
 
 ---
 
-### 🧠 Head Tilt-Based Steering Control
+### 🧠 **Head Tilt-Based Steering Control**
 
 - **CARLA Simulation Demo:**  
   [Watch Video](https://drive.google.com/file/d/1AUFyfK4gxlDs891u75sz6nJrJITF55UH/view?usp=sharing)
@@ -138,12 +138,19 @@ Experience the CARLA Gesture Control system in action through the following demo
 
 ---
 
-### 👤 Face Turn-Based Steering Control
+### 👤 **Face Turn-Based Steering Control**
 
 - **CARLA Simulation Demo:**  
   [Watch Video](https://drive.google.com/file/d/1_o7SD0GZ2F-mlRX2xM4x_p6MJOAqmkOf/view?usp=sharing)
 
 - **Face Detection Demo:**  
   [Watch Video](https://drive.google.com/file/d/1hZIwq-2pV8ndKU-hkFky4aXwb-FDZsoY/view?usp=sharing)
+
+---
+
+### 📝 **Testing Results**
+
+My friend tested the gesture control system and captured the results on video.  
+[Watch the Test Video](https://drive.google.com/file/d/1Y_aqdYOVROBW7FGmKN8mTXcMbB2Wn27X/view?usp=sharing)
 
 ---
